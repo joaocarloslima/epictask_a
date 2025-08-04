@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EpicTask</title>
+</head>
+<body>
+
+<h1>Epic Task</h1>
+
+<ul>
+    <li th:each="task : ${tasks}" th:text="${task.description}"></li>
+</ul>
+
+</body>
+</html>

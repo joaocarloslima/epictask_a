@@ -1,8 +1,13 @@
 package br.com.fiap.epictaska.task;
 
+import br.com.fiap.epictaska.task.dto.TaskForm;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +20,10 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final MessageSource messageSource;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, MessageSource messageSource) {
+        this.messageSource = messageSource;
         this.taskService = taskService;
     }
 
@@ -27,14 +34,18 @@ public class TaskController {
     }
 
     @GetMapping("/form")
-    public String form(){
+    public String form(Model model){
+        model.addAttribute("taskForm", new TaskForm("", "", 50));
         return "form";
     }
 
     @PostMapping("/form")
-    public String create(Task task, RedirectAttributes redirect){ // TODO DTO
-        taskService.save(task);
-        redirect.addFlashAttribute("message", "Tarefa criada com sucesso!");
+    public String create(@Valid TaskForm taskForm, BindingResult result, RedirectAttributes redirect){
+        if(result.hasErrors()) return "form";
+
+        taskService.save(taskForm.toModel());
+        var message = messageSource.getMessage("task.created.success", null, LocaleContextHolder.getLocale());
+        redirect.addFlashAttribute("message", message);
         return "redirect:/task";
     }
 

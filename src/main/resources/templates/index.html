@@ -9,9 +9,26 @@
 </head>
 <body>
 
-<h1 class="p-8 text-primary">Epic Task</h1>
+<div class="navbar bg-base-200 shadow-sm">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl">EpicTask</a>
+    </div>
+    <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+            <li>
+                <details>
+                    <summary>🌎</summary>
+                    <ul class="bg-base-100 rounded-t-none p-2">
+                        <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                        <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </div>
+</div>
 
-<a href="/task/form" class="btn btn-primary">Nova Tarefa</a>
+<a href="/task/form" class="btn btn-primary" th:text="#{task.new}"></a>
 
 <div th:if="${message}" role="alert" class="alert alert-success alert-soft m-8">
     <span th:text="${message}"></span>
@@ -26,7 +43,7 @@
             <div class="radial-progress" th:style="${'--value:' + task.status}" th:aria-valuenow="${task.status}" role="progressbar" th:text="${task.status + '%'}"></div>
         </div>
         <div class="justify-end card-actions m-4">
-            <button class="btn btn-error btn-soft">apagar</button>
+            <button class="btn btn-error btn-soft" th:text="#{delete}"></button>
         </div>
     </div>
 </main>

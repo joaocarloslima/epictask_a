@@ -13,29 +13,29 @@
 
 
 <main class="grid place-items-center p-8 ">
-    <h2 class="font-bold text-xl">Nova Tarefa</h2>
-    <form method="POST" class="w-full max-w-md">
+    <h2 class="font-bold text-xl" th:text="#{task.new}"></h2>
+    <form method="POST" class="w-full max-w-md" th:object="${taskForm}">
         <fieldset class="fieldset">
-            <legend class="fieldset-legend">Título</legend>
-            <input name="title" type="text" class="input" placeholder="título da tarefa" />
-            <p class="label">campo obrigatório</p>
+            <legend class="fieldset-legend" th:text="#{title}"></legend>
+            <input th:field="*{title}" type="text" class="input" th:errorclass="input-error"  />
+            <p class="label text-error" th:errors="*{title}"></p>
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="fieldset-legend">Descrição</legend>
-            <textarea name="description" class="textarea" placeholder="descrição da tarefa"></textarea>
-            <p class="label">pelo menos 10 caracteres</p>
+            <legend class="fieldset-legend" th:text="#{description}"></legend>
+            <textarea th:field="*{description}" class="textarea" th:errorclass="textarea-error"></textarea>
+            <p class="label text-error" th:errors="*{description}"></p>
         </fieldset>
 
         <fieldset class="fieldset">
-            <legend class="fieldset-legend">Pontos</legend>
-            <input name="score" id="score-range" type="range" min="1" max="100" value="40" class="range range-secondary" />
-            <p id="score-label" class="label">40 pts</p>
+            <legend class="fieldset-legend" th:text="#{score}"></legend>
+            <input th:field="*{score}" id="score-range" type="range" min="1" max="100" value="40" class="range range-secondary" />
+            <p id="score-label" class="label" th:text="${taskForm.score + ' pts'}">40 pts</p>
         </fieldset>
 
         <div class="flex justify-between max-w-md">
-            <a href="/task" class="btn btn-soft">Cancelar</a>
-            <button class="btn btn-soft btn-primary">Cadastrar</button>
+            <a href="/task" class="btn btn-soft" th:text="#{cancel}"></a>
+            <button class="btn btn-soft btn-primary" th:text="#{save}"></button>
         </div>
 
     </form>

@@ -14,7 +14,7 @@
 
 <main class="grid place-items-center p-8 ">
     <h2 class="font-bold text-xl" th:text="#{task.new}"></h2>
-    <form method="POST" class="w-full max-w-md" th:object="${taskForm}">
+    <form method="POST" class="w-full max-w-md" th:object="${taskForm}" th:action="${'/task/form'}">
         <fieldset class="fieldset">
             <legend class="fieldset-legend" th:text="#{title}"></legend>
             <input th:field="*{title}" type="text" class="input" th:errorclass="input-error"  />

@@ -52,7 +52,12 @@
 </div>
 
 <main class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-8 place-items-center">
-    <div th:each="task : ${tasks}" class="card w-96 bg-base-300 card-md shadow-sm">
+    <div th:each="task : ${tasks}" class="card w-96 bg-base-300 card-md shadow-sm relative">
+        <div th:if="${task.user}" class="avatar">
+            <div class="w-12 rounded-full absolute top-4 right-4">
+                <img th:src="${task.user.avatarUrl}" />
+            </div>
+        </div>
         <div class="badge badge-accent m-4" th:text="${task.score + ' pts'}">50 pts</div>
         <div class="card-body items-center">
             <h2 class="card-title" th:text="${task.title}"></h2>
@@ -60,7 +65,34 @@
             <div class="radial-progress" th:style="${'--value:' + task.status}" th:aria-valuenow="${task.status}" role="progressbar" th:text="${task.status + '%'}"></div>
         </div>
         <div class="justify-end card-actions m-4">
-            <button class="btn btn-error btn-soft" th:text="#{delete}"></button>
+            <form th:if="${task.user == null}"  method="post" th:action="${'/task/pick/' + task.id}">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-warning btn-soft" title="pegar tarefa">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-icon lucide-hand"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+                </button>
+            </form>
+            <form th:if="${task.user != null}" method="post" th:action="${'/task/drop/' + task.id}">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-warning btn-soft" title="largar tarefa">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-grab-icon lucide-hand-grab"><path d="M18 11.5V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4"/><path d="M14 10V8a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 9.9V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v5"/><path d="M6 14a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8 2 2 0 1 1 4 0"/></svg>
+                </button>
+            </form>
+            <form th:if="${task.status > 0}" method="post" th:action="${'/task/dec/' + task.id}">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-info btn-soft" title="reduzir status">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                </button>
+            </form>
+            <form th:if="${task.status < 100}" method="post" th:action="${'/task/inc/' + task.id}">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-info btn-soft" title="incrementar status">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+            </form>
+            <form th:action="${'/task/' + task.id}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <button  class="btn btn-error btn-soft" th:text="#{delete}"></button>
+            </form>
         </div>
     </div>
 </main>

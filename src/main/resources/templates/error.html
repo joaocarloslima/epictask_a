@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dracula">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <title>EpicTask</title>
+</head>
+<body>
+    <h1 class="text-3xl text-primary font-bold p-8">EPIC TASK</h1>
+    <div class="card bg-neutral text-neutral-content p-8">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title" th:text="${error}">Erro!</h2>
+            <p th:text="${message}">Um erro aconteceu</p>
+            <div class="card-actions justify-end">
+                <a href="javascript:history.back()" class="btn btn-primary">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

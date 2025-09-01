@@ -1,0 +1,12 @@
+CREATE TABLE epicuser (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  avatar_url VARCHAR(255)
+);
+
+ALTER TABLE task
+    ADD user_id BIGINT;
+
+ALTER TABLE task
+    ADD CONSTRAINT FK_TASK_ON_USER FOREIGN KEY (user_id) REFERENCES epicuser (id);

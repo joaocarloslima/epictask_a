@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dracula">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <title>EpicTask</title>
+</head>
+<body>
+
+<div class="navbar bg-base-200 shadow-sm">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl">EpicTask</a>
+    </div>
+    <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+            <li>
+                <details>
+                    <summary>🌎</summary>
+                    <ul class="bg-base-100 rounded-t-none p-2">
+                        <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                        <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+        <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                <div class="w-10 rounded-full">
+                    <img
+                            alt="Tailwind CSS Navbar component"
+                            th:src="${avatar}" />
+                </div>
+            </div>
+            <ul
+                    tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                <li>
+                    <a class="justify-between" th:text="${user.attributes.email}"></a>
+                </li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="overflow-x-auto">
+    <table class="table">
+        <!-- head -->
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Pontos</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="user : ${users}">
+            <td>
+                <div class="flex items-center gap-3">
+                    <div class="avatar">
+                        <div class="mask mask-squircle h-12 w-12">
+                            <img
+                                    th:src="${user.avatarUrl}"
+                                    alt="avatar do usuário" />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-bold" th:text="${user.name}"></div>
+                        <div class="text-sm opacity-50" th:text="${user.email}"></div>
+                    </div>
+                </div>
+            </td>
+            <td th:text="${user.score}"> </td>
+        </tr>
+
+    </table>
+</div>
+
+
+</body>
+</html>

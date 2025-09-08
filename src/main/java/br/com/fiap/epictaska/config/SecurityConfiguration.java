@@ -17,7 +17,7 @@ public class SecurityConfiguration {
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
                         .defaultSuccessUrl("/task")
-                        .userInfoEndpoint(info -> info.userService(userService))
+                        //.userInfoEndpoint(info -> info.userService(userService))
                         .permitAll()
                 )
                 .logout( logout -> logout

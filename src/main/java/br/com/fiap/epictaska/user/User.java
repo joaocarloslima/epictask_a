@@ -28,6 +28,8 @@ public class User extends DefaultOAuth2User {
 
     private String avatarUrl;
 
+    private int score = 0;
+
     public User(OAuth2User principal){
         super(
                 List.of(new SimpleGrantedAuthority("USER")),
@@ -39,6 +41,7 @@ public class User extends DefaultOAuth2User {
         this.avatarUrl = principal.getAttribute("picture") != null ?
                             principal.getAttribute("picture").toString() :
                             principal.getAttribute("avatar_url").toString();
+        this.score = 0;
 
     }
 

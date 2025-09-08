@@ -57,6 +57,10 @@ public class TaskService {
         var task = taskRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(message)
         );
+        if(!task.getUser().equals(user)){
+            var error = messageSource.getMessage("task.assigned.to.other.user", null, LocaleContextHolder.getLocale());
+            throw new IllegalStateException(error);
+        }
         task.setUser(null);
         taskRepository.save(task);
     }
@@ -71,6 +75,10 @@ public class TaskService {
 
         if (task.getStatus() > 100) {
             task.setStatus(100);
+        }
+
+        if(task.getStatus() == 100){
+            userService.addScore(user, task.getScore());
         }
 
         taskRepository.save(task);
@@ -92,5 +100,7 @@ public class TaskService {
     }
 
 
-
+    public List<Task> getUndoneTasks() {
+        return taskRepository.findByStatusLessThan(100);
+    }
 }
